@@ -64,9 +64,9 @@ class TranslateResult extends Component {
     return (
       <div style={this.props.style} className="translate-result">
         { this.state.result ? (
-          <Card style={{ width: 300}}>
+          <Card style={{ width: 300, fontSize: "1.75em", fontWeight: "bold"}}>
             <p><Icon type="sound" /> {this.state.result.transcript}</p>
-            <p><Icon type="robot" /> {this.state.result.translation}</p>
+            { !this.props.hideTranslate ? <p><Icon type="robot" /> {this.state.result.translation}</p> : '' }
           </Card>
         ):'' }
       </div>

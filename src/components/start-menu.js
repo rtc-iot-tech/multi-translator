@@ -21,6 +21,12 @@ class StartMenu extends Component {
     });
   }
 
+  componentDidMount() {
+    const { setFieldsValue } = this.props.form;
+
+    setFieldsValue({ languageCode: 'ja-JP', targetLanguage: 'en' })
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -29,50 +35,52 @@ class StartMenu extends Component {
     };
 
     return (
-      <div className="start-menu">
+      <div className="start-menu" style={this.props.style}>
         <div>
         { (!this.props.languageCode && ! this.props.targetLanguage ) ? (
-          <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-            <Form.Item
-              label="Your language"
-              hasFeedback
-            >
-              {getFieldDecorator('languageCode', {
-                rules: [
-                  { required: true, message: 'Please select your language' },
-                ],
-              })(
-                <Select placeholder="Select your language">
-                  <Option value="ja-JP">Japanese</Option>
-                  <Option value="en-US">English(USA)</Option>
-                  <Option value="en-SG">English(Singapore)</Option>
-                  <Option value="th-TH">Thai</Option>
-                </Select>
-              )}
-            </Form.Item>
-            <Form.Item
-              label="Translation language"
-              hasFeedback
-            >
-              {getFieldDecorator('targetLanguage', {
-                rules: [
-                  { required: true, message: 'Please select translation language' },
-                ],
-              })(
-                <Select placeholder="Select translation language">
-                  <Option value="en">English</Option>
-                  <Option value="ja">Japanese</Option>
-                  <Option value="th">Thai</Option>
-                </Select>
-              )}
-            </Form.Item>
-  
-            <Form.Item
-              wrapperCol={{ span: 12, offset: 6 }}
-            >
-            <Button type="primary" htmlType="submit">Submit</Button>
-            </Form.Item>
-          </Form>
+          <div style={{marginTop: "6em"}}>
+            <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+              <Form.Item
+                label="Your language"
+                hasFeedback
+              >
+                {getFieldDecorator('languageCode', {
+                  rules: [
+                    { required: true, message: 'Please select your language' },
+                  ],
+                })(
+                  <Select placeholder="Select your language" style={{ width: 300 }}>
+                    <Option value="ja-JP">Japanese</Option>
+                    <Option value="en-US">English(USA)</Option>
+                    <Option value="en-SG">English(Singapore)</Option>
+                    <Option value="th-TH">Thai</Option>
+                  </Select>
+                )}
+              </Form.Item>
+              <Form.Item
+                label="Translation language"
+                hasFeedback
+              >
+                {getFieldDecorator('targetLanguage', {
+                  rules: [
+                    { required: true, message: 'Please select translation language' },
+                  ],
+                })(
+                  <Select placeholder="Select translation language" style={{ width: 300 }}>
+                    <Option value="en">English</Option>
+                    <Option value="ja">Japanese</Option>
+                    <Option value="th">Thai</Option>
+                  </Select>
+                )}
+              </Form.Item>
+
+              <Form.Item
+                wrapperCol={{ span: 12, offset: 6 }}
+              >
+                <Button type="primary" htmlType="submit">Submit</Button>
+              </Form.Item>
+            </Form>
+          </div>
           ): ''}
         </div>
         <div style={{ position: "relative" }}>
@@ -80,7 +88,7 @@ class StartMenu extends Component {
             <div>
               <List style={{ paddingLeft: 10}}>
                 <List.Item>Your language: {this.props.languageCode}</List.Item>
-                <List.Item>Translation: {this.props.targetLanguage}</List.Item>
+                { !this.props.hideTranslate ? <List.Item>Translation: {this.props.targetLanguage}</List.Item> : ''}
               </List>
     
 
@@ -92,7 +100,7 @@ class StartMenu extends Component {
               position: "absolute", 
               left:25, 
               top:200, 
-              zIndex: 1000 
+              zIndex: 1000,
             }} {...this.props} />
           ) : ''}
         </div>
